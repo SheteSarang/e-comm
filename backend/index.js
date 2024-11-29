@@ -1,25 +1,28 @@
-
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import express from "express";
-
-dotenv.config();
-
+const express = require("express");
+const cors = require("cors");
+require('./db/config');
+const User = require("./db/User.js");
 const app = express();
-const productSchema= new mongoose.Schema({});
-const product= mongoose.model('product',productSchema);
-const data = await product.find();
-console.warn(data);
-const PORT = process.env.PORT || 7000;
-const URL = process.env.MONGOURL;
+app.use(express.json());
+app.use(cors());
+//API to register
+app.post("/Register", async (req,resp)=>{
+    console.log("connected")
+    const {name, email, password} = req.body ;
+    console.log(req)
+    let user= new User({name, email, password});
+    let result = await user.save();
+    console.log(user)
+    resp.send(result);
+});
 
-mongoose.connect(URL).then(()=>{
-    console.log("DB connected successfully");
+// app.post("/register", async (req,resp)=>{
+//     console.log("connected")
+//     let user= await User.create(req.body);
+//     if(!user){
+//         console.log("User Not Created")
+//     }
+//     resp.send(user);
+// });
 
-    app.listen(PORT, ()=>{
-        console.log(`server is running on port: ${PORT}`);
-    })
-}).catch(error => console.log("Error: ",error));
-
-
-
+app.listen(5000);

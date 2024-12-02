@@ -3,7 +3,7 @@ import { Link, useNavigate} from 'react-router-dom';
 const Nav=()=>{
     // 1.now this line down below is for- <li>{ auth ? <Link to="/logout">logout</Link>:<Link to="/Register">SignUp</Link>}</li>
     //if signedup -->signin button visible. If not signedin--> logout button not visible.. method is checking local storage .
-    //2.For logout functionality, oonce logout, page should redirect to signup. Hence, instead of <Link to="/logout">, write /register.
+    //2.For logout functionality, once logout, page should redirect to signup. Hence, instead of <Link to="/logout">, write /register.
     const auth= localStorage.getItem('user');
     const navigate = useNavigate(); // used to rerender the component after every chamge is detected
     const logout =()=>{
@@ -18,7 +18,13 @@ const Nav=()=>{
                 <li><Link to="/update">Update Product</Link></li>
                
                 <li><Link to="/profile">Profile</Link></li>
-                <li>{ auth ? <Link onClick={logout} to="/Register">logout</Link>:<Link to="/Register">SignUp</Link>}</li>
+                {/* <li>{ auth ? <Link onClick={logout} to="/Register">logout</Link>:<Link to="/Register">SignUp</Link>}</li>
+                <li><Link to="/login">Login</Link></li> */}
+                {
+                    auth ? <li><Link onClick={logout} to="/Register">logout</Link></li>:<>
+                   <li><Link to="/Register">SignUp</Link></li>
+                <li><Link to="/login">Login</Link></li></>
+                }
             </ul>
         </div>
     )

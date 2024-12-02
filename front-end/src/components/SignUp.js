@@ -15,7 +15,7 @@ const SignUp = ()=>{
             navigate('/');
         }
     })
-
+//API Integration
     const collectData=async ()=>{
         console.warn(name,email,password);
         let result = await fetch('http://localhost:5000/Register', {

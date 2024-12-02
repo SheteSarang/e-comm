@@ -5,8 +5,7 @@ import Footer from './components/Footer';
 import SignUp from './components/SignUp';
 //importing pvt component
 import PrivateComponent from './components/PrivateComponent';
-
-
+import Login from './components/Login';
 
 
 function App() {
@@ -26,6 +25,7 @@ function App() {
       </Route>
 
       <Route path="/Register" element={<SignUp />}  />
+      <Route path="/Login" element={<Login />}   />
     </Routes>
      </BrowserRouter>
      <Footer />

@@ -12,20 +12,25 @@ const Nav=()=>{
     }
     return(
         <div>
-            <ul className="nav-ul">
+            {/* Logo attachment */}
+            <img
+            alt="Logo" //For img tag, we need to write alt. So Logo inside alt is written just for the sake of filling the field.
+            className='logo'
+            src='https://img.freepik.com/premium-vector/phoenix-gradient-logo-design_102547-24.jpg?w=360' />
+            {
+                auth ? 
+                <ul className="nav-ul">
                 <li><Link to="/">Products</Link></li>
                 <li><Link to="/add">Add Products</Link></li>
                 <li><Link to="/update">Update Product</Link></li>
                
                 <li><Link to="/profile">Profile</Link></li>
+                <li><Link onClick={logout} to="/Register">logout {JSON.parse(auth).name} </Link></li>
                 {/* <li>{ auth ? <Link onClick={logout} to="/Register">logout</Link>:<Link to="/Register">SignUp</Link>}</li>
                 <li><Link to="/login">Login</Link></li> */}
-                {
-                    auth ? <li><Link onClick={logout} to="/Register">logout</Link></li>:<>
-                   <li><Link to="/Register">SignUp</Link></li>
-                <li><Link to="/login">Login</Link></li></>
-                }
-            </ul>
+                
+                </ul>:<ul className="nav-ul nav-right"><li><Link to="/Register">SignUp</Link></li><li><Link to="/login">Login</Link></li></ul>
+            }
         </div>
     )
 }

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require('./db/config');
 const User = require("./db/User.js");
+const Product = require("./db/Product.js");
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -42,4 +43,9 @@ app.post("/login", async (req,resp)=>{
     }
 })
 
+app.post("/add-product",async (req,resp)=>{
+    let product = new Product(req.body);
+    let result = await product.save();
+    resp.send(result)
+})
 app.listen(5000);

@@ -7,7 +7,7 @@ const AddProduct = () => {
     const [category,setCategory]=useState("");
     const [company,setCompany]=useState("");
     const addProduct=async()=>{
-        if(name !=="" ){
+        if(name.trim() !=="" && price.trim() !=="" && category.trim() !=="" && company.trim() !=="" ){
             console.warn(name,price,category,company);
             const userId1 = JSON.parse(localStorage.getItem('user'))._id; // Correct method
             console.warn(userId1);
@@ -22,7 +22,7 @@ const AddProduct = () => {
             result = await result.json();
             console.warn(result);
         }else{
-            alert("Insert Name of Product.")
+            alert("Either of the filed is blank.")
         }
     }
     return ( 

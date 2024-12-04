@@ -13,6 +13,7 @@ const Login = () => {
 })
   // Define the handleLogin function
   const handleLogin = async () => {
+    
     console.warn(email, password);
     //API Integration
     let result = await fetch('http://localhost:5000/login', {
@@ -30,6 +31,7 @@ const Login = () => {
         }else{
           alert("Please enter correct details or if new, please signin")
         }
+      
   };
 
   return (

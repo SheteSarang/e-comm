@@ -6,7 +6,8 @@ import SignUp from './components/SignUp';
 //importing pvt component
 import PrivateComponent from './components/PrivateComponent';
 import Login from './components/Login';
-import AddProduct from './components/AddProduct.js'
+import AddProduct from './components/AddProduct.js';
+import ProductList from './components/productList.js';
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
     <Routes>
       <Route element={<PrivateComponent  />}>
 
-      <Route path="/" element={<h1>Product Listing Component</h1>}  /> 
+      <Route path="/" element={< ProductList/>}  /> 
       <Route path="/add" element={<AddProduct/>}  />
       <Route path="/update" element={<h1>Update Product Component</h1>}  />
       <Route path="/logout" element={<h1>Logout Component</h1>}  />

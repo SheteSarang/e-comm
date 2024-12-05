@@ -6,7 +6,7 @@ const AddProduct = () => {
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
     const [company, setCompany] = useState("");
-    const [showForm, setShowForm] = useState(true); // Controls form visibility  if blank- true.| Not blank=false
+    const [productAdded, setProductAdded] = useState(false); // Track if product is added
 
     const addProduct = async () => {
         if (name.trim() !== "" && price.trim() !== "" && category.trim() !== "" && company.trim() !== "") {
@@ -30,7 +30,7 @@ const AddProduct = () => {
             setPrice('');
             setCategory('');
             setCompany('');
-            setShowForm(false);
+            setProductAdded(true); // Mark product as added
         } else {
             alert("Either of the fields is blank.");
         }
@@ -38,19 +38,60 @@ const AddProduct = () => {
 
     return (
         <div className='product'>
-            <h1>Add Product</h1>
+            {/* Conditionally render the heading */}
+            {!productAdded && <h1>Add Product</h1>} {/* Show heading only if the product is not added */}
 
-            {showForm ?
-            (
+            {productAdded ? (
+                <>
+                    <p>Product added successfully!</p>
+                    <button
+                        style={{
+                            backgroundColor: 'skyblue',
+                            color: 'black',
+                            border: 'none',
+                            padding: '10px 20px',
+                            cursor: 'pointer',
+                        }}
+                        onClick={() => window.location.href = "/products"} // Navigate to product list page
+                    >
+                        Go to List of Products
+                    </button>
+                </>
+            ) : (
                 <div>
-                    <input type="text" required={true} placeholder="Enter product Name" className="inputbox-addproduct" value={name} onChange={(e) => setName(e.target.value)} />
-                    <input  type="text"  required={true}  placeholder="Enter product Price" className="inputbox-addproduct" value={price} onChange={(e) => setPrice(e.target.value)}  />
-                    <input  type="text" placeholder="Enter product Category" className="inputbox-addproduct"value={category}onChange={(e) => setCategory(e.target.value)}/>
-                    <input type="text" placeholder="Enter product Company" className="inputbox-addproduct"value={company} onChange={(e) => setCompany(e.target.value)}/>
+                    <input 
+                        type="text" 
+                        required 
+                        placeholder="Enter product Name" 
+                        className="inputbox-addproduct" 
+                        value={name} 
+                        onChange={(e) => setName(e.target.value)} 
+                    />
+                    <input  
+                        type="text"  
+                        required 
+                        placeholder="Enter product Price" 
+                        className="inputbox-addproduct" 
+                        value={price} 
+                        onChange={(e) => setPrice(e.target.value)} 
+                    />
+                    <input  
+                        type="text" 
+                        placeholder="Enter product Category" 
+                        className="inputbox-addproduct"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                    />
+                    <input 
+                        type="text" 
+                        placeholder="Enter product Company" 
+                        className="inputbox-addproduct"
+                        value={company} 
+                        onChange={(e) => setCompany(e.target.value)}
+                    />
                     <button onClick={addProduct} className="buttonaddproduct">Add Product </button>
                 </div>
-            ) : (<p>Product added successfully!</p>)
-            }
+            )}
         </div>
     );
 };

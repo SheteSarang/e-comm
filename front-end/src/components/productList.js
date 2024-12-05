@@ -13,23 +13,48 @@ const ProductList = () => {
         setProducts(result);
     };
 
-    // Conventional way with a for loop
     const renderProducts = () => {
-        const rows = [];
-        for (let i = 0; i < products.length; i++) {
-            const product = products[i];
-            rows.push(
-                <tr key={i}>
-                    <td>{i + 1}</td> {/* Sr.No column */}
-                    <td>{product._id}</td> {/* ID column (left aligned) */}
-                    <td>{product.name}</td>
-                    <td>{product.price}</td>
-                    <td>{product.category}</td>
-                    <td>{product.company}</td>
-                </tr>
-            );
+        return products.map((product, index) => (
+            <tr key={index}>
+                <td>{index + 1}</td> {/* Sr.No column */}
+                <td>{product._id}</td> 
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>{product.category}</td>
+                <td>{product.company}</td>
+                <td>
+                <button 
+                     style={{  backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px',  cursor: 'pointer'  }} >
+                     Update
+                </button>
+                <button 
+                    style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', marginRight: '10px', cursor: 'pointer' }}onClick={() => handleDelete(product._id)}>
+                        Delete
+                </button>
+                    
+                </td> 
+            </tr>
+        ));
+    };
+    const handleDelete = async (productId) => {
+        //  asking a confirmation msg 
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmDelete) {
+        // If the user clicks "Cancel," stop the deletion process
+        return;
+    }
+        // Send DELETE request to the backend
+        let result = await fetch(`http://localhost:5000/delete-product/${productId}`, {
+            method: 'DELETE',
+        });
+
+        //  Check if the delete was successful
+        if (result.ok) {
+            // Update the local state to remove the deleted product. So this local state helps avoid round trips between backend and frontend.
+            setProducts(products.filter((product) => product._id !== productId));
+        } else {
+            console.error("Failed to delete product");
         }
-        return rows;
     };
 
     return (
@@ -44,6 +69,7 @@ const ProductList = () => {
                         <th>Price</th>
                         <th>Category</th>
                         <th>Company</th>
+                        <th></th> {/* Empty header for Delete & Update buttons */}
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +77,7 @@ const ProductList = () => {
                         renderProducts()
                     ) : (
                         <tr>
-                            <td colSpan="6">No products found</td>
+                            <td colSpan="7">No products found</td>
                         </tr>
                     )}
                 </tbody>

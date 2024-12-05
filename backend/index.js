@@ -56,5 +56,21 @@ app.get("/products", async (req,resp)=>{
         resp.send({result: "No products found"})
     }
 })
+app.delete("/delete-product/:id", async (req, resp) => {
+    const { id } = req.params; // Get the product ID from the URL
+
+    try {
+        // Find and delete the product by its ID
+        const result = await Product.findByIdAndDelete(id);
+        
+        if (result) {
+            resp.send({ result: "Product deleted successfully" });
+        } else {
+            resp.send({ result: "Product not found" });
+        }
+    } catch (error) {
+        resp.status(500).send({ error: "Error deleting product" });
+    }
+});
 app.get("/")
 app.listen(5000);

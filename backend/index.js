@@ -72,5 +72,17 @@ app.delete("/delete-product/:id", async (req, resp) => {
         resp.status(500).send({ error: "Error deleting product" });
     }
 });
+app.get("/product/:id", async (req, resp) => {
+    try {
+        let result = await Product.findOne({ _id: req.params.id });
+        if (result) {
+            resp.send(result);
+        } else {
+            resp.send({ result: "No result found" });
+        }
+    } catch (error) {
+        resp.status(500).send({ error: "An error occurred while fetching the product" });
+    }
+});
 app.get("/")
 app.listen(5000);

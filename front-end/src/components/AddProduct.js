@@ -52,9 +52,9 @@ const AddProduct = () => {
                             padding: '10px 20px',
                             cursor: 'pointer',
                         }}
-                        onClick={() => window.location.href = "/products"} // Navigate to product list page
+                        onClick={() => window.location.href = "/"} // Navigate to product list page
                     >
-                        Go to List of Products
+                        Go to Product List
                     </button>
                 </>
             ) : (

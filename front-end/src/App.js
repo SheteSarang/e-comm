@@ -8,7 +8,7 @@ import PrivateComponent from './components/PrivateComponent';
 import Login from './components/Login';
 import AddProduct from './components/AddProduct.js';
 import ProductList from './components/productList.js';
-
+import UpdateProduct from './components/UpdateProduct.js'
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
 
       <Route path="/" element={< ProductList/>}  /> 
       <Route path="/add" element={<AddProduct/>}  />
-      <Route path="/update" element={<h1>Update Product Component</h1>}  />
+      <Route path="/update/:id" element={<UpdateProduct />}  />
       <Route path="/logout" element={<h1>Logout Component</h1>}  />
       <Route path="/profile" element={<h1>Profile Component</h1>}  />
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 const ProductList = () => {
     const [products, setProducts] = useState([]);
 
@@ -23,10 +23,12 @@ const ProductList = () => {
                 <td>{product.category}</td>
                 <td>{product.company}</td>
                 <td>
+                <Link to={"/update/100"+product._id} style={{ textDecoration: 'none' }}>    {/* Link to="/update/100" --> This is static id passing  */}
                 <button 
                      style={{  backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px',  cursor: 'pointer'  }} >
                      Update
                 </button>
+                </Link>
                 <button 
                     style={{ backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', marginRight: '10px', cursor: 'pointer' }}onClick={() => handleDelete(product._id)}>
                         Delete
@@ -36,7 +38,7 @@ const ProductList = () => {
             </tr>
         ));
     };
-    const handleDelete = async (productId) => {
+    const handleDelete = async (catched_ID_of_the_product_sent_through_handleDelete_function) => {
         //  asking a confirmation msg 
     const confirmDelete = window.confirm("Are you sure you want to delete this product?");
     if (!confirmDelete) {
@@ -44,14 +46,14 @@ const ProductList = () => {
         return;
     }
         // Send DELETE request to the backend
-        let result = await fetch(`http://localhost:5000/delete-product/${productId}`, {
+        let result = await fetch(`http://localhost:5000/delete-product/${catched_ID_of_the_product_sent_through_handleDelete_function}`, {
             method: 'DELETE',
         });
 
         //  Check if the delete was successful
         if (result.ok) {
             // Update the local state to remove the deleted product. So this local state helps avoid round trips between backend and frontend.
-            setProducts(products.filter((product) => product._id !== productId));
+            setProducts(products.filter((product) => product._id !== catched_ID_of_the_product_sent_through_handleDelete_function));
         } else {
             console.error("Failed to delete product");
         }

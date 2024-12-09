@@ -6,6 +6,7 @@ const Product = require("./db/Product.js");
 const app = express();
 app.use(express.json());
 app.use(cors());
+
 //API to register
 app.post("/Register", async (req,resp)=>{
     console.log("connected")
@@ -73,16 +74,18 @@ app.delete("/delete-product/:id", async (req, resp) => {
     }
 });
 app.get("/product/:id", async (req, resp) => {
-    try {
-        let result = await Product.findOne({ _id: req.params.id });
-        if (result) {
-            resp.send(result);
-        } else {
-            resp.send({ result: "No result found" });
-        }
-    } catch (error) {
-        resp.status(500).send({ error: "An error occurred while fetching the product" });
-    }
-});
+   
+ let result = await Product.findOne({ _id:req.params.id})  
+ if(result){
+    resp.send(result)
+ }else{
+    resp.send({result:"NO RECORD FOUND"})
+ }
+})
+
+app.put("/product/:id", async (req,resp)=>{
+let result = await Product.updateOne({ _id:req.params.id},{$set : req.body})
+resp.send(result)
+})
 app.get("/")
 app.listen(5000);

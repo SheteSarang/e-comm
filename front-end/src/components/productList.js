@@ -23,7 +23,7 @@ const ProductList = () => {
                 <td>{product.category}</td>
                 <td>{product.company}</td>
                 <td>
-                <Link to={"/update/100"+product._id} style={{ textDecoration: 'none' }}>    {/* Link to="/update/100" --> This is static id passing  */}
+                <Link to={"/update/"+product._id} style={{ textDecoration: 'none' }}>    {/* Link to="/update/100" --> This is static id passing  */}
                 <button 
                      style={{  backgroundColor: 'green', color: 'white', border: 'none', padding: '5px 10px',  cursor: 'pointer'  }} >
                      Update

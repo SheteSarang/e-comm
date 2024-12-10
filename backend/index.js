@@ -6,6 +6,8 @@ const Product = require("./db/Product.js");
 const app = express();
 app.use(express.json());
 app.use(cors());
+const Jwt = require('jsonwebtoken');  //Run the command -- npm i jsonwebtoken
+const jwtKey = 'e-comm'   //secret key that we define for JWT. 
 
 //API to register
 app.post("/Register", async (req,resp)=>{
@@ -14,12 +16,17 @@ app.post("/Register", async (req,resp)=>{
     console.log(req);
     let user= new User({name, email, password});
     let result = await user.save();
-    result = result.toObject();  //To hide the password from external world. Make a object of result & delete password before sending resp.
-    delete result.password;                     
-    console.log(user)
-    resp.send(result);
-});
-
+    result = result.toObject();  
+    delete result.password;       //To hide the password from external world. Make a object of result & delete password before sending resp.
+        Jwt.sign({result},jwtKey,{expiresIn:"2h"},(err,token)=>{    //JWT Authentication.When user enters loginID ad password at the time of login/signup,that means it is authenticated user.So a token gets generated and given to user.That token gets applied in every API.If the token is worng or expired, results wont get.
+            if (err) {
+                return resp.send({ result: "something went wrong" });
+            }
+            // Move the response here
+            resp.send({ result, token });
+                                                                }
+                )
+    })
 // app.post("/register", async (req,resp)=>{
 //     console.log("connected")
 //     let user= await User.create(req.body);
@@ -34,8 +41,13 @@ app.post("/login", async (req,resp)=>{
     if (req.body.password && req.body.email) //while checking if user exist or not in DB, user must enter email & password both. 
     {
     let user = await User.findOne(req.body).select("-password");   //Login functionality. user's credentials exist in database or not, it will check it findOne method will check it. And send back 200 OK. select("-password") will hide the password from external world.
-    if(user){                                                      
-    resp.send(user);
+        if(user){        
+        Jwt.sign({user},jwtKey,{expiresIn:"2h"},(err,token)=>{    //JWT Authentication.When user enters loginID ad password at the time of login/signup,that means it is authenticated user.So a token gets generated and given to user.That token gets applied in every API.If the token is worng or expired, results wont get.
+            if(err){
+            resp.send({result:"something went wrong"})
+        }
+        resp.send({user,token: token})
+        })                                              
     }else{
         resp.send({result:'No user found'});
     }

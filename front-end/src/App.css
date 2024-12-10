@@ -84,7 +84,7 @@
   margin-left: 20px;
 }
 .product{
-  margin-left: 30%;
+  margin-left: 40%;
 }
 .inputbox-addproduct{
   display: block;
@@ -103,7 +103,19 @@
   cursor: pointer;
   margin-left: 0%;
 }
-
+.search-product-box{
+  margin: 7px;
+  width: 120px;
+  border: 2px solid rgb(33, 148, 180);
+  padding-left:5%;
+  height: 30px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 1px;
+  margin-bottom: 20px;
+  margin-left: 39.5%;
+  margin-top: 0px;
+}
 
 @keyframes App-logo-spin {
   from {

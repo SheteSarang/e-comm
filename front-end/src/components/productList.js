@@ -59,9 +59,24 @@ const ProductList = () => {
         }
     };
 
+    const searchHandle= async (event)=>{
+        console.warn(event.target.value)
+        let key = event.target.value;
+        if(!key){
+            getProducts();
+        }
+        let result = await fetch(`http://localhost:5000/search/${key}`);
+        result = await result.json();
+            if(result){
+                setProducts(result)
+            }
+        
+    }
+
     return (
         <div className="product-list">
-            <h3>Product List</h3>
+            <h3 className='product'>Product List</h3>
+            <input className = "search-product-box" type="text" placeholder='search product' onChange={searchHandle}/>
             <table border="1" style={{ width: '100%', textAlign: 'center', margin: 'auto' }}>
                 <thead style={{ backgroundColor: 'skyblue', color: 'black' }}>
                     <tr>

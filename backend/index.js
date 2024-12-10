@@ -87,5 +87,28 @@ app.put("/product/:id", async (req,resp)=>{
 let result = await Product.updateOne({ _id:req.params.id},{$set : req.body})
 resp.send(result)
 })
+
+app.get("/search/:key", async (req, resp)=>{
+    
+    // let result = await Product.find({                           //Taking an obj in find function.
+    // "$or":[
+    //     {name:{$regex:req.params.key}},
+    //     {price:{$regex:req.params.key}},
+    //     {category:{$regex:req.params.key}},
+    //     {company:{$regex:req.params.key}}
+    // ]                                                            //whenever you're searching in more than one field, you need $or
+    // });
+    const searchKey = req.params.key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape special characters
+    let result = await Product.find({
+        "$or": [
+            { name: { $regex: searchKey, $options: "i" } },     // Case-insensitive search for name
+            { price: { $regex: searchKey, $options: "i" } },    // Case-insensitive search for price
+            { category: { $regex: searchKey, $options: "i" } }, // Case-insensitive search for category
+            { company: { $regex: searchKey, $options: "i" } }   // Case-insensitive search for company
+        ]
+    });
+    resp.send(result)
+})
+
 app.get("/")
 app.listen(5000);

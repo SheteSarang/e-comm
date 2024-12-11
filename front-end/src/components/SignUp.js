@@ -10,9 +10,7 @@ const SignUp = () => {
   // Once, user is signedup, he should not be able to naviigate to the button again. So if you click on the signup button again, you will be navigated to home page i.e products
   useEffect(() => {
     const auth = localStorage.getItem("user");
-    if (auth) {
-      navigate("/");
-    }
+   
   });
   //API Integration
   const collectData = async () => {
@@ -30,7 +28,9 @@ const SignUp = () => {
       //Now after singin data successfully entered into db, redirect to specific path.
       if (result) {
         //local storage. To check it, go to inspect, application, local storage.j
-        localStorage.setItem("user", JSON.stringify(result));
+        localStorage.setItem("user", JSON.stringify(result.result));
+        localStorage.setItem("token", JSON.stringify(result.auth));
+
         navigate("/");
       }
     }

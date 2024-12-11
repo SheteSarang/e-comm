@@ -41,13 +41,11 @@ app.post("/login", async (req,resp)=>{
     if (req.body.password && req.body.email) //while checking if user exist or not in DB, user must enter email & password both. 
     {
     let user = await User.findOne(req.body).select("-password");   //Login functionality. user's credentials exist in database or not, it will check it findOne method will check it. And send back 200 OK. select("-password") will hide the password from external world.
-        if(user){        
-        Jwt.sign({user},jwtKey,{expiresIn:"2h"},(err,token)=>{    //JWT Authentication.When user enters loginID ad password at the time of login/signup,that means it is authenticated user.So a token gets generated and given to user.That token gets applied in every API.If the token is worng or expired, results wont get.
-            if(err){
-            resp.send({result:"something went wrong"})
-        }
-        resp.send({user,token: token})
-        })                                              
+    if(user){                                                      
+     Jwt.sign({ user }, jwtKey, {expiresIn:"2h"},(err, token)=>{if(err){resp.send({result:"something went wrong"})}resp.send({user,auth:token})})
+
+
+
     }else{
         resp.send({result:'No user found'});
     }
